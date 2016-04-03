@@ -22,7 +22,7 @@ public class MainGame extends StateBasedGame{
         AppGameContainer appGc ;
         try{
             appGc = new AppGameContainer(new MainGame(GAME_NAME));
-            appGc.setDisplayMode(800,640,false); //setting the default resolution , false means no fullscreen
+            appGc.setDisplayMode(800,600,false); //setting the default resolution , false means no fullscreen
             appGc.start();
 
         }catch(SlickException ex){
