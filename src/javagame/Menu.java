@@ -11,7 +11,7 @@ public class Menu extends BasicGameState {
     Image exitButton;
     Image optionsButton;
     Image highscoreButton;
-
+    Music openingmusic;
     public Menu(int state) {
 
     }
@@ -22,7 +22,8 @@ public class Menu extends BasicGameState {
         exitButton = new Image("res/exit.jpg");
         optionsButton = new Image("res/options.jpg");
         highscoreButton = new Image("res/highscores.jpg");
-
+        openingmusic = new Music("res/pacnakov_openingmusic.ogg");
+        openingmusic.loop();
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -54,11 +55,13 @@ public class Menu extends BasicGameState {
         mouse = "xpos" + xpos + "ypos" + ypos;
         if ((xpos > 445 && xpos < 668) && (ypos > 303 && ypos < 355)) {
             if (Mouse.isButtonDown(0)) {
+                openingmusic.stop();
                 sbg.enterState(1); //if button is clicked inside the area : Start a new game
             }
         }
         if ((xpos > 445 && xpos < 668) && (ypos > 60 && ypos < 115)) {
             if (Mouse.isButtonDown(0)) {
+                openingmusic.stop();
                 System.exit(0); // if button is clicked exit the Launcher
             }
         }
