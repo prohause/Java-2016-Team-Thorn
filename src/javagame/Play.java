@@ -32,34 +32,30 @@ public class Play extends BasicGameState {
 
         Input input = gc.getInput();
 
-
-
-            if (input.isKeyDown(Input.KEY_UP)) {
-                facey -= 0.5;
-            }
-            if (input.isKeyDown(Input.KEY_DOWN)) {
+        if (input.isKeyDown(Input.KEY_UP)) {
+            facey -= 0.5;
+            if (facey < 0) {
                 facey += 0.5;
             }
-            if (input.isKeyDown(Input.KEY_LEFT)) {
-                facex -= 0.5;
+        }
+        if (input.isKeyDown(Input.KEY_DOWN)) {
+            facey += 0.5;
+            if (facey > 523) {
+                facey -= 0.5;
             }
-            if (input.isKeyDown(Input.KEY_RIGHT)) {
+        }
+        if (input.isKeyDown(Input.KEY_LEFT)) {
+            facex -= 0.5;
+            if (facex < 0) {
                 facex += 0.5;
             }
-        if (facex < 0){
-            facex = 0;
         }
-        if (facex > 725){
-            facex = 725;
+        if (input.isKeyDown(Input.KEY_RIGHT)) {
+            facex += 0.5;
+            if (facex > 725) {
+                facex -= 0.5;
+            }
         }
-        if (facey < 0){
-            facey = 0;
-        }
-        if (facey > 523){
-            facey = 523;
-        }
-
-
 
     }
 
