@@ -15,6 +15,7 @@ public class Play extends BasicGameState {
     float speed = 0.4f;
     Music openingmusic;
 
+
     public Play(int state) {
 
     }
@@ -41,6 +42,15 @@ public class Play extends BasicGameState {
 
         background.draw(0, 0);
         nakov.draw(facex, facey);
+
+        if (quit==true){
+            g.drawString("Resume(R)",350,200);
+            g.drawString("Main Menu(M)",350,250);
+            g.drawString("Quit Game (Q)",350,300);
+           if (quit==false){
+               g.clear();
+           }
+        }
 
     }
 
@@ -74,6 +84,20 @@ public class Play extends BasicGameState {
             facex += speed;
             if (facex > 750) {
                 facex -= speed;
+            }
+        }
+        if (input.isKeyDown(Input.KEY_ESCAPE)){
+            quit=true;
+        }
+        if (quit==true){
+            if (input.isKeyDown(Input.KEY_R)){
+                quit=false;
+            }
+            if (input.isKeyDown(Input.KEY_M)){
+                sbg.enterState(0);
+            }
+            if (input.isKeyDown(Input.KEY_Q)){
+                System.exit(0);
             }
         }
 
