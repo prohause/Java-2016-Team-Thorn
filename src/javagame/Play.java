@@ -22,7 +22,7 @@ public class Play extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         background = new Image("res/background.jpg");
-        gc.setShowFPS(false);
+        gc.setShowFPS(true);
         openingmusic = new Music("res/pacnakov_openingmusic.ogg");
         openingmusic.loop();
         Image[] movingRight = {new Image("res/right1.png"), new Image("res/right2.png"), new Image("res/right3.png")};

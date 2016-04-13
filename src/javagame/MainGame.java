@@ -7,15 +7,18 @@ public class MainGame extends StateBasedGame{
     public static final String GAME_NAME = "PackNakov!";
     public static final int LAUNCHER = 0;
     public static final int PLAY = 1;
+    public static final int HIGHSCORE = 2;
 
     public MainGame(String GAME_NAME) {
         super(GAME_NAME);
         this.addState(new Menu(LAUNCHER));
         this.addState(new Play(PLAY));
+        this.addState(new HighScore(HIGHSCORE));
     }
     public void initStatesList(GameContainer gc) throws SlickException{
         this.getState(LAUNCHER).init(gc,this);
         this.getState(PLAY).init(gc,this);
+        this.getState(HIGHSCORE).init(gc,this);
         this.enterState(LAUNCHER); // initialstate - LAUNCHER
     }
     public static void main(String[] args) {

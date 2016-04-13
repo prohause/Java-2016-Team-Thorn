@@ -3,6 +3,7 @@ package javagame;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import javax.swing.JOptionPane;
 
 public class Menu extends BasicGameState {
     String mouse = "";
@@ -53,18 +54,35 @@ public class Menu extends BasicGameState {
         int xpos = Mouse.getX();
         int ypos = Mouse.getY();
         mouse = "xpos" + xpos + "ypos" + ypos;
-        if ((xpos > 445 && xpos < 668) && (ypos > 303 && ypos < 355)) {
-            if (Mouse.isButtonDown(0)) {
+        if ((xpos > 445 && xpos < 668) && (ypos > 303 && ypos < 355))
+        {
+            if (Mouse.isButtonDown(0))
+            {
                 openingmusic.stop();
                 sbg.enterState(1); //if button is clicked inside the area : Start a new game
             }
         }
-        if ((xpos > 445 && xpos < 668) && (ypos > 60 && ypos < 115)) {
-            if (Mouse.isButtonDown(0)) {
+        if ((xpos > 445 && xpos < 668) && (ypos > 220 && ypos < 275))
+        {
+            if (Mouse.isButtonDown(0))
+            {
+                openingmusic.stop();
+                sbg.enterState(2); //if button is clicked inside the area : Start a new game
+            }
+        }
+        if ((xpos > 445 && xpos < 668) && (ypos > 60 && ypos < 115))
+        {
+            if (Mouse.isButtonDown(0))
+            {
                 openingmusic.stop();
                 System.exit(0); // if button is clicked exit the Launcher
             }
         }
+
+
+
+
+
     }
 
     public int getID() {
