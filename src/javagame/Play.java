@@ -132,7 +132,7 @@ public class Play extends BasicGameState {
                 break;
             case 1:
                 shiftY += ghostSpeed;//down
-                if (shiftY > 580) {
+                if (shiftY > 550) {
                     shiftY -= ghostSpeed;
                     theRandomNumber = randomGen.nextInt(4);
                 }
@@ -149,7 +149,7 @@ public class Play extends BasicGameState {
 
             case 3:
                 shiftX += ghostSpeed;//right
-                if (shiftX > 780) {
+                if (shiftX > 750) {
                     shiftX -= ghostSpeed;
                     theRandomNumber = randomGen.nextInt(4);
 
