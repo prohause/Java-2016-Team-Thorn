@@ -9,20 +9,19 @@ public class Play extends BasicGameState {
     private int[] duration = {130, 130, 130};
     private Image background;
     private boolean quit = false;
-    private float facex = 0;
-    private float facey = 0;
+    private float faceX = 0;
+    private float faceY = 0;
     private float speed = 0.4f;
-    private Music openingmusic;
+    private Music openingMusic;
 
     public Play(int state) {
-
     }
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         background = new Image("res/background.jpg");
         gc.setShowFPS(true);
-        openingmusic = new Music("res/pacnakov_openingmusic.ogg");
-        openingmusic.loop();
+        openingMusic = new Music("res/pacnakov_openingmusic.ogg");
+        openingMusic.loop();
         Image[] movingRight = {new Image("res/right1.png"), new Image("res/right2.png"), new Image("res/right3.png")};
         Image[] movingLeft = {new Image("res/left1.png"), new Image("res/left2.png"), new Image("res/left3.png")};
         Image[] movingUp = {new Image("res/up1.png"), new Image("res/up2.png"), new Image("res/up3.png")};
@@ -33,13 +32,11 @@ public class Play extends BasicGameState {
         up = new Animation(movingUp, duration, true);
         down = new Animation(movingDown, duration, true);
         nakov = right;
-
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-
         background.draw(0, 0);
-        nakov.draw(facex, facey);
+        nakov.draw(faceX, faceY);
 
         if (quit) {
             g.drawString("Resume(R)", 350, 200);
@@ -55,33 +52,33 @@ public class Play extends BasicGameState {
         Input input = gc.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
             nakov = up;
-            facey -= speed;
-            if (facey < 0) {
-                facey += speed;
+            faceY -= speed;
+            if (faceY < 0) {
+                faceY += speed;
             }
         }
 
         if (input.isKeyDown(Input.KEY_DOWN)) {
             nakov = down;
-            facey += speed;
-            if (facey > 550) {
-                facey -= speed;
+            faceY += speed;
+            if (faceY > 550) {
+                faceY -= speed;
             }
         }
 
         if (input.isKeyDown(Input.KEY_LEFT)) {
             nakov = left;
-            facex -= speed;
-            if (facex < 0) {
-                facex += speed;
+            faceX -= speed;
+            if (faceX < 0) {
+                faceX += speed;
             }
         }
 
         if (input.isKeyDown(Input.KEY_RIGHT)) {
             nakov = right;
-            facex += speed;
-            if (facex > 750) {
-                facex -= speed;
+            faceX += speed;
+            if (faceX > 750) {
+                faceX -= speed;
             }
         }
 
