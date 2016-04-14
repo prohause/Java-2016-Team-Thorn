@@ -4,14 +4,24 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.Random;
+
 public class Play extends BasicGameState {
-    private Animation nakov, right, left, up, down;
+    private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
+    private Animation ghost, ghostRight, ghostLeft, ghostUp , ghostDown;
     private int[] duration = {130, 130, 130};
     private Image background;
     private boolean quit = false;
     private float faceX = 0;
     private float faceY = 0;
+    private float ghostPositionX=0;
+    private float ghostPositionY=0;
+    private float shiftX=ghostPositionX+400;
+    private float shiftY=ghostPositionX+300;
     private float speed = 0.4f;
+    private float ghostSpeed = 0.4f;
+    private Random randomGen = new Random();
+    private int theRandomNumber=randomGen.nextInt(4);
     private Music openingMusic;
 
     public Play(int state) {
@@ -27,16 +37,30 @@ public class Play extends BasicGameState {
         Image[] movingUp = {new Image("res/up1.png"), new Image("res/up2.png"), new Image("res/up3.png")};
         Image[] movingDown = {new Image("res/down1.png"), new Image("res/down2.png"), new Image("res/down3.png")};
 
-        right = new Animation(movingRight, duration, true);
-        left = new Animation(movingLeft, duration, true);
-        up = new Animation(movingUp, duration, true);
-        down = new Animation(movingDown, duration, true);
-        nakov = right;
+        nakovRight = new Animation(movingRight, duration, true);
+        nakovLeft = new Animation(movingLeft, duration, true);
+        nakovUp = new Animation(movingUp, duration, true);
+        nakovDown = new Animation(movingDown, duration, true);
+        nakov = nakovRight;
+
+        Image[] ghostMovingRight = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
+        Image[] ghostMovingLeft = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
+        Image[] ghostMovingUp = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
+        Image[] ghostMovingDown = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
+
+        ghostRight = new Animation(ghostMovingRight,duration,true);
+        ghostLeft = new Animation(ghostMovingLeft,duration,true);
+        ghostDown = new Animation(ghostMovingDown,duration,true);
+        ghostUp = new Animation(ghostMovingUp,duration,true);
+
+        ghost = ghostRight;
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         background.draw(0, 0);
         nakov.draw(faceX, faceY);
+        ghost.draw(shiftX,shiftY);
+        g.drawString(("X"+shiftX+ " Y"+shiftY),200,300);
 
         if (quit) {
             g.drawString("Resume(R)", 350, 200);
@@ -51,14 +75,14 @@ public class Play extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         Input input = gc.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
-            nakov = up;
+            nakov = nakovUp;
             faceY -= speed;
             if (faceY < 0) {
                 faceY += speed;
             }
         }
         else if (input.isKeyDown(Input.KEY_DOWN)) {
-            nakov = down;
+            nakov = nakovDown;
             faceY += speed;
             if (faceY > 550) {
                 faceY -= speed;
@@ -66,7 +90,7 @@ public class Play extends BasicGameState {
         }
 
         else if (input.isKeyDown(Input.KEY_LEFT)) {
-            nakov = left;
+            nakov = nakovLeft;
             faceX -= speed;
             if (faceX < 0) {
                 faceX += speed;
@@ -74,7 +98,7 @@ public class Play extends BasicGameState {
         }
 
        else  if (input.isKeyDown(Input.KEY_RIGHT)) {
-            nakov = right;
+            nakov = nakovRight;
             faceX += speed;
             if (faceX > 750) {
                 faceX -= speed;
@@ -97,6 +121,41 @@ public class Play extends BasicGameState {
             else if (input.isKeyDown(Input.KEY_Q)) {
                 System.exit(0);
             }
+        }
+        switch (theRandomNumber) {
+            case 0:
+                shiftY -= ghostSpeed;//up
+                if (shiftY < 0) {
+                    shiftY += ghostSpeed;
+                    theRandomNumber = randomGen.nextInt(4);
+                }
+                break;
+            case 1:
+                shiftY += ghostSpeed;//down
+                if (shiftY > 580) {
+                    shiftY -= ghostSpeed;
+                    theRandomNumber = randomGen.nextInt(4);
+                }
+                break;
+
+            case 2:
+                shiftX -= ghostSpeed;//left
+                if (shiftX < 0) {
+                    shiftX += ghostSpeed;
+                    theRandomNumber = randomGen.nextInt(4);
+
+                }
+                break;
+
+            case 3:
+                shiftX += ghostSpeed;//right
+                if (shiftX > 780) {
+                    shiftX -= ghostSpeed;
+                    theRandomNumber = randomGen.nextInt(4);
+
+                }
+                break;
+
         }
     }
 
