@@ -5,16 +5,14 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Play extends BasicGameState {
-
-    Animation nakov, right, left, up, down;
-    int[] duration = {130, 130, 130};
-    Image background;
-    boolean quit = false;
-    float facex = 0;
-    float facey = 0;
-    float speed = 0.4f;
-    Music openingmusic;
-
+    private Animation nakov, right, left, up, down;
+    private int[] duration = {130, 130, 130};
+    private Image background;
+    private boolean quit = false;
+    private float facex = 0;
+    private float facey = 0;
+    private float speed = 0.4f;
+    private Music openingmusic;
 
     public Play(int state) {
 
@@ -43,21 +41,18 @@ public class Play extends BasicGameState {
         background.draw(0, 0);
         nakov.draw(facex, facey);
 
-        if (quit==true){
-            g.drawString("Resume(R)",350,200);
-            g.drawString("Main Menu(M)",350,250);
-            g.drawString("Quit Game (Q)",350,300);
-           if (quit==false){
-               g.clear();
-           }
+        if (quit) {
+            g.drawString("Resume(R)", 350, 200);
+            g.drawString("Main Menu(M)", 350, 250);
+            g.drawString("Quit Game (Q)", 350, 300);
+            if (!quit) {
+                g.clear();
+            }
         }
-
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-
         Input input = gc.getInput();
-
         if (input.isKeyDown(Input.KEY_UP)) {
             nakov = up;
             facey -= speed;
@@ -65,6 +60,7 @@ public class Play extends BasicGameState {
                 facey += speed;
             }
         }
+
         if (input.isKeyDown(Input.KEY_DOWN)) {
             nakov = down;
             facey += speed;
@@ -72,6 +68,7 @@ public class Play extends BasicGameState {
                 facey -= speed;
             }
         }
+
         if (input.isKeyDown(Input.KEY_LEFT)) {
             nakov = left;
             facex -= speed;
@@ -79,6 +76,7 @@ public class Play extends BasicGameState {
                 facex += speed;
             }
         }
+
         if (input.isKeyDown(Input.KEY_RIGHT)) {
             nakov = right;
             facex += speed;
@@ -86,21 +84,24 @@ public class Play extends BasicGameState {
                 facex -= speed;
             }
         }
-        if (input.isKeyDown(Input.KEY_ESCAPE)){
-            quit=true;
+
+        if (input.isKeyDown(Input.KEY_ESCAPE)) {
+            quit = true;
         }
-        if (quit==true){
-            if (input.isKeyDown(Input.KEY_R)){
-                quit=false;
+
+        if (quit) {
+            if (input.isKeyDown(Input.KEY_R)) {
+                quit = false;
             }
-            if (input.isKeyDown(Input.KEY_M)){
+
+            if (input.isKeyDown(Input.KEY_M)) {
                 sbg.enterState(0);
             }
-            if (input.isKeyDown(Input.KEY_Q)){
+
+            if (input.isKeyDown(Input.KEY_Q)) {
                 System.exit(0);
             }
         }
-
     }
 
     public int getID() {
