@@ -57,8 +57,7 @@ public class Play extends BasicGameState {
                 faceY += speed;
             }
         }
-
-        if (input.isKeyDown(Input.KEY_DOWN)) {
+        else if (input.isKeyDown(Input.KEY_DOWN)) {
             nakov = down;
             faceY += speed;
             if (faceY > 550) {
@@ -66,7 +65,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_LEFT)) {
+        else if (input.isKeyDown(Input.KEY_LEFT)) {
             nakov = left;
             faceX -= speed;
             if (faceX < 0) {
@@ -74,7 +73,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_RIGHT)) {
+       else  if (input.isKeyDown(Input.KEY_RIGHT)) {
             nakov = right;
             faceX += speed;
             if (faceX > 750) {
@@ -82,7 +81,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_ESCAPE)) {
+       else if (input.isKeyDown(Input.KEY_ESCAPE)) {
             quit = true;
         }
 
@@ -91,11 +90,11 @@ public class Play extends BasicGameState {
                 quit = false;
             }
 
-            if (input.isKeyDown(Input.KEY_M)) {
+            else if (input.isKeyDown(Input.KEY_M)) {
                 sbg.enterState(0);
             }
 
-            if (input.isKeyDown(Input.KEY_Q)) {
+            else if (input.isKeyDown(Input.KEY_Q)) {
                 System.exit(0);
             }
         }
