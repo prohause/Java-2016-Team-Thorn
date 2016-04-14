@@ -54,14 +54,15 @@ public class Play extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         Input input = gc.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
-            nakov = up;
-            facey -= speed;
-            if (facey < 0) {
-                facey += speed;
-            }
+                nakov = up;
+                facey -= speed;
+                if (facey < 0) {
+                    facey += speed;
+                }
+
         }
 
-        if (input.isKeyDown(Input.KEY_DOWN)) {
+        else if (input.isKeyDown(Input.KEY_DOWN)) {
             nakov = down;
             facey += speed;
             if (facey > 550) {
@@ -69,7 +70,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_LEFT)) {
+        else if (input.isKeyDown(Input.KEY_LEFT)) {
             nakov = left;
             facex -= speed;
             if (facex < 0) {
@@ -77,7 +78,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_RIGHT)) {
+       else  if (input.isKeyDown(Input.KEY_RIGHT)) {
             nakov = right;
             facex += speed;
             if (facex > 750) {
@@ -85,7 +86,7 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (input.isKeyDown(Input.KEY_ESCAPE)) {
+       else if (input.isKeyDown(Input.KEY_ESCAPE)) {
             quit = true;
         }
 
@@ -94,11 +95,11 @@ public class Play extends BasicGameState {
                 quit = false;
             }
 
-            if (input.isKeyDown(Input.KEY_M)) {
+            else if (input.isKeyDown(Input.KEY_M)) {
                 sbg.enterState(0);
             }
 
-            if (input.isKeyDown(Input.KEY_Q)) {
+            else if (input.isKeyDown(Input.KEY_Q)) {
                 System.exit(0);
             }
         }
