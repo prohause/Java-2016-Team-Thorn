@@ -55,7 +55,7 @@ public class Play extends BasicGameState {
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        background.draw(nakovPositionX, nakovPositionY);
+        background.draw(0, 0);
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostshiftX, ghostshiftY);
         graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
