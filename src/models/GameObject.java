@@ -1,6 +1,4 @@
-package javagame.models;
-
-import javagame.exeptions.GameCharacteristicOutOfRangeException;
+package models;
 
 import java.awt.*;
 
@@ -9,14 +7,14 @@ public abstract class GameObject {
 
     private Point position;
 
-    protected GameObject(String id) throws GameCharacteristicOutOfRangeException {
-        Id = id;
-    }
+  //  protected GameObject(String id) throws GameCharacteristicOutOfRangeException {
+  //      Id = id;
+  //  }
 
-    public GameObject(String id, Point coordinates) throws GameCharacteristicOutOfRangeException {
-        this(id);
-        Coordinates = coordinates;
-    }
+  //  public GameObject(String id, Point coordinates) throws GameCharacteristicOutOfRangeException {
+  //      this(id);
+   //     Coordinates = coordinates;
+    //}
 
     public String Model;
 

@@ -1,4 +1,4 @@
-package javagame;
+package javagame.states;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -33,7 +33,7 @@ public class Menu extends BasicGameState {
         launcherMenu.draw(0, 0);
         graphics.drawString(mouse, 100, 50);
 
-        // if mouse hovering over the area a button is drawed
+        // if mouse hovering over the area a button is drawn
         if ((xPosition > 445 && xPosition < 668) && (yPosition > 303 && yPosition < 355)) {
             playButton.draw(440, 242);
         }
@@ -65,7 +65,7 @@ public class Menu extends BasicGameState {
         if ((xPosition > 445 && xPosition < 668) && (yPosition > 220 && yPosition < 275)) {
             if (Mouse.isButtonDown(0)) {
                 openingmusic.stop();
-                stateBasedGame.enterState(2); //if button is clicked inside the area : Start a new game
+                stateBasedGame.enterState(2); //if button is clicked inside the area : Open High Score
             }
         }
 
