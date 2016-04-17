@@ -33,6 +33,7 @@ public class Play extends BasicGameState {
     private int rows;
     private int cols;
 
+
     public void readMaze() {
         try {
             Scanner sc = new Scanner(new File("res/maze.txt"));
@@ -92,10 +93,11 @@ public class Play extends BasicGameState {
 //         maze.draw(0,0);
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostshiftX, ghostshiftY);
+        graphics.drawString(row + " " + col + " " + theRandomNumber, 200, 500);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (charAt(r, c) != '0') {
-                    graphics.fillRect(c * 50, r * 35, 50, 35);
+                    //graphics.fillRect(c * 50, r * 50, 50, 50);
                 }
             }
         }
@@ -117,57 +119,99 @@ public class Play extends BasicGameState {
 
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
+        row = (int) Math.round(nakovPositionY / 50) + 1;
+        col = (int) Math.round(nakovPositionX / 50) + 1;
 
         //up
         if (input.isKeyDown(Input.KEY_UP) && row > 0) {
-            nakov = nakovUp;
-            row--;
-            nakovPositionY -= nakovStep;
-            if (row + 1 > 0) {
-                if (charAt(row, col) == '0') {
-                    nakovPositionY += nakovStep;
+            if (charAt(row - 1, col) == '1') {
+                nakov = nakovUp;
+                //row--;
+                nakovPositionY -= nakovStep;
+                nakovPositionX = (col - 1) * 50;
+            } else {
+                if (nakovPositionY > (row - 1) * 50) {
+                    nakovPositionY -= nakovStep;
+                } else {
+                    nakovPositionY = (row - 1) * 50;
                 }
             }
+
+           /* if (row + 1 > 0) {
+                if (charAt(row-1, col) == '0') {
+                    nakovPositionY += nakovStep;
+                }
+            }*/
 
             //down
 
         } else if (input.isKeyDown(Input.KEY_DOWN) && row < rows) {
-            nakov = nakovDown;
-            row++;
-            nakovPositionX += nakovStep;
-                if (row < 17) {
+            if (charAt(row + 1, col) == '1') {
+                nakov = nakovDown;
+                //row++;
+                nakovPositionY += nakovStep;
+                nakovPositionX = (col - 1) * 50;
+
+            } else {
+                if (nakovPositionY < (row - 1) * 50) {
+                    nakovPositionY += nakovStep;
+                } else {
+                    nakovPositionY = (row - 1) * 50;
+                }
+            }
+
+                /*if (row < 16) {
                     if (charAt(row, col) == '0') {
                         nakovPositionY -= nakovStep;
                     }
-                }
+                }*/
 
         }
-            //left
+        //left
 
         else if (input.isKeyDown(Input.KEY_LEFT) && col > 0)
 
         {
-            nakov = nakovLeft;
-            col--;
-            nakovPositionX -= nakovStep;
-            if (col + 1 > 0) {
+            if (charAt(row, col - 1) == '1') {
+                nakov = nakovLeft;
+                //col--;
+                nakovPositionX -= nakovStep;
+                nakovPositionY = (row - 1) * 50;
+            } else {
+                if (nakovPositionX > (col - 1) * 50) {
+                    nakovPositionX -= nakovStep;
+                } else {
+                    nakovPositionX = (col - 1) * 50;
+                }
+            }
+           /* if (col + 1 > 0) {
                 if (charAt(row, col) == '0') {
                     nakovPositionX += nakovStep;
                 }
-            }
+            }*/
 
 
             //right
 
         } else if (input.isKeyDown(Input.KEY_RIGHT) && col < cols) {
-            nakov = nakovRight;
-            col++;
-            nakovPositionX += nakovStep;
-            if (17 > col) {
+            if (charAt(row, col + 1) == '1') {
+                nakov = nakovRight;
+                //col++;
+                nakovPositionX += nakovStep;
+                nakovPositionY = (row - 1) * 50;
+            } else {
+                if (nakovPositionX < (col - 1) * 50) {
+                    nakovPositionX += nakovStep;
+                } else {
+                    nakovPositionX = (col - 1) * 50;
+                }
+            }
+
+            /*if (17 > col) {
                 if (charAt(row, col) == '0') {
                     nakovPositionX -= nakovStep;
                 }
-            }
+            }*/
 
             //quit
         } else if (input.isKeyDown(Input.KEY_ESCAPE))
@@ -207,8 +251,10 @@ public class Play extends BasicGameState {
                 break;
             case 2:
                 ghostshiftX -= ghostStep;//left
-                ghostshiftX += ghostStep;
-                theRandomNumber = randomGen.nextInt(4);
+                if (ghostshiftX < 0) {
+                    ghostshiftX += ghostStep;
+                    theRandomNumber = randomGen.nextInt(4);
+                }
                 break;
             case 3:
                 ghostshiftX += ghostStep;//right
@@ -216,6 +262,8 @@ public class Play extends BasicGameState {
                     ghostshiftX -= ghostStep;
                     theRandomNumber = randomGen.nextInt(4);
                 }
+                break;
+            default:
                 break;
         }
 
