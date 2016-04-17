@@ -112,14 +112,23 @@ public class Play extends BasicGameState {
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '2') {
-                    beer.draw((c - 1) * 50, (r - 1) * STEP);
+                    beer.draw((c - 1) * STEP, (r - 1) * STEP);
                 }
                 if (charAt(r, c) == '3') {
-                    rakiq.draw((c - 1) * 50, (r - 1) * STEP);
+                    rakiq.draw((c - 1) * STEP, (r - 1) * STEP);
                 }
 
             }
         }
+        // this loop is for pancake_lizard so he can make the maze image easier :)
+        for(int r=1;r<rows-1;r++){
+            for(int c=1;c<cols-1;c++){
+                if(charAt(r,c)=='0'){
+                    graphics.fillRect((c-1)*STEP,(r-1)*STEP,STEP,STEP);
+                }
+            }
+        }
+        //
         graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
         //  graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
         if (quit) {
