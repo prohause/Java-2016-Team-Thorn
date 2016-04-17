@@ -4,6 +4,7 @@
     <list default="true" id="0fe15a83-0dae-44fa-8c59-e593008ba19f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Team Thorn/javagame/states/Play.class" afterPath="$PROJECT_DIR$/out/production/Team Thorn/javagame/states/Play.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/maze.txt" afterPath="$PROJECT_DIR$/res/maze.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javagame/states/Play.java" afterPath="$PROJECT_DIR$/src/javagame/states/Play.java" />
     </list>
     <ignored path="Java-2016-Team-Thorn.iws" />
@@ -41,8 +42,8 @@
       <file leaf-file-name="Play.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javagame/states/Play.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="130" column="10" selection-start-line="130" selection-start-column="10" selection-end-line="130" selection-end-column="10" />
+            <state relative-caret-position="106">
+              <caret line="194" column="30" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -227,7 +228,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -278,10 +281,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java-2016-Team-Thorn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Java-2016-Team-Thorn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="RunManager" selected="Application.MainGame">
@@ -1386,8 +1401,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javagame/states/Play.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="130" column="10" selection-start-line="130" selection-start-column="10" selection-end-line="130" selection-end-column="10" />
+        <state relative-caret-position="106">
+          <caret line="194" column="30" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

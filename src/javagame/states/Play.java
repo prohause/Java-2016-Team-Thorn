@@ -121,10 +121,10 @@ public class Play extends BasicGameState {
             }
         }
         // this loop is for pancake_lizard so he can make the maze image easier :)
-        for(int r=1;r<rows-1;r++){
-            for(int c=1;c<cols-1;c++){
-                if(charAt(r,c)=='0'){
-                    graphics.fillRect((c-1)*STEP,(r-1)*STEP,STEP,STEP);
+        for (int r = 1; r < rows - 1; r++) {
+            for (int c = 1; c < cols - 1; c++) {
+                if (charAt(r, c) == '0') {
+                    graphics.fillRect((c - 1) * STEP, (r - 1) * STEP, STEP, STEP);
                 }
             }
         }
@@ -187,10 +187,13 @@ public class Play extends BasicGameState {
         }
         //left
 
-        else if (input.isKeyDown(Input.KEY_LEFT) && col > 0)
-
-        {
-            if (charAt(row, col - 1) != '0') {
+        else if (input.isKeyDown(Input.KEY_LEFT) && col >= 0) {
+            //teleportation left
+            if (col == 0 && charAt(row, col ) != '0') {
+                nakovPositionX -= nakovStep;
+                nakovPositionX = (cols-2)*STEP;
+                col = cols - 2;
+            } else if (charAt(row, col - 1) != '0') {
                 nakov = nakovLeft;
                 //col--;
                 nakovPositionX -= nakovStep;
@@ -205,9 +208,13 @@ public class Play extends BasicGameState {
             }
 
             //right
-
         } else if (input.isKeyDown(Input.KEY_RIGHT) && col < cols) {
-            if (charAt(row, col + 1) != '0') {
+            //teleportation right
+            if (col == cols - 1 && charAt(row, col) != '0') {
+                nakovPositionX += nakovStep;
+                nakovPositionX = 0;
+                col = 0;
+            } else if (charAt(row, col + 1) != '0') {
                 nakov = nakovRight;
                 //col++;
                 nakovPositionX += nakovStep;
@@ -216,7 +223,7 @@ public class Play extends BasicGameState {
                 if (nakovPositionX < (col - 1) * STEP) {
                     nakovPositionX += nakovStep;
                 } else {
-                    nakovPositionX = (col - 1) * STEP;
+                    //nakovPositionX = (col - 1) * STEP;
                     nakov = nakovRight;
                 }
             }
