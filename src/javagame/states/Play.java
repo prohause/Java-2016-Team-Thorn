@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Play extends BasicGameState {
-    private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown,nakovStuck;
+    private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
     private Animation ghost, ghostRight, ghostLeft, ghostUp, ghostDown;
     private int[] duration = {130, 130, 130};
     private Image background;
@@ -25,8 +25,7 @@ public class Play extends BasicGameState {
     //private float ghostshiftY = ghostPositionY + 300;
     private Random randomGen = new Random();
     private int theRandomNumber = randomGen.nextInt(4);
-    private final int width = 50;
-    private final int height = 35;
+    private static final int STEP = 50;
     private ArrayList<StringBuilder> lines = new ArrayList<>();
     private int row = 0;
     private int col = 0;
@@ -75,7 +74,6 @@ public class Play extends BasicGameState {
         nakovLeft = new Animation(movingLeft, duration, true);
         nakovUp = new Animation(movingUp, duration, true);
         nakovDown = new Animation(movingDown, duration, true);
-        nakovStuck = new Animation(stuck,duration,true);
         nakov = nakovRight;
 
         Image[] ghostMovingRight = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
@@ -94,12 +92,12 @@ public class Play extends BasicGameState {
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '5') {
-                    ghostPositionX = (c - 1) * 50;
-                    ghostPositionY = (r - 15) * 50;
+                    ghostPositionX = (c - 1) * STEP;
+                    ghostPositionY = (r - 15) * STEP;
                 }
                 if (charAt(r, c) == '4') {
-                    nakovPositionX = (c - 1) * 50;
-                    nakovPositionY = (r - 15) * 50;
+                    nakovPositionX = (c - 1) * STEP;
+                    nakovPositionY = (r - 15) * STEP;
                 }
             }
         }
@@ -114,10 +112,10 @@ public class Play extends BasicGameState {
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '2') {
-                    beer.draw((c - 1) * 50, (r - 1) * 50);
+                    beer.draw((c - 1) * 50, (r - 1) * STEP);
                 }
                 if (charAt(r, c) == '3') {
-                    rakiq.draw((c - 1) * 50, (r - 1) * 50);
+                    rakiq.draw((c - 1) * 50, (r - 1) * STEP);
                 }
 
             }
@@ -141,8 +139,8 @@ public class Play extends BasicGameState {
 
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
-        row = (int) Math.round(nakovPositionY / 50) + 1;
-        col = (int) Math.round(nakovPositionX / 50) + 1;
+        row = (int) Math.round(nakovPositionY / STEP) + 1;
+        col = (int) Math.round(nakovPositionX / STEP) + 1;
 
         //up
         if (input.isKeyDown(Input.KEY_UP) && row > 0) {
@@ -150,22 +148,15 @@ public class Play extends BasicGameState {
                 nakov = nakovUp;
                 //row--;
                 nakovPositionY -= nakovStep;
-                nakovPositionX = (col - 1) * 50;
+                nakovPositionX = (col - 1) * STEP;
             } else {
-                if (nakovPositionY > (row - 1) * 50) {
+                if (nakovPositionY > (row - 1) * STEP) {
                     nakovPositionY -= nakovStep;
                 } else {
-                    nakovPositionY = (row - 1) * 50;
-                    //nakov=nakovStuck;
+                    nakovPositionY = (row - 1) * STEP;
                     nakov = nakovUp;
                 }
             }
-
-           /* if (row + 1 > 0) {
-                if (charAt(row-1, col) == '0') {
-                    nakovPositionY += nakovStep;
-                }
-            }*/
 
             //down
 
@@ -174,24 +165,16 @@ public class Play extends BasicGameState {
                 nakov = nakovDown;
                 //row++;
                 nakovPositionY += nakovStep;
-                nakovPositionX = (col - 1) * 50;
+                nakovPositionX = (col - 1) * STEP;
 
             } else {
-                if (nakovPositionY < (row - 1) * 50) {
+                if (nakovPositionY < (row - 1) * STEP) {
                     nakovPositionY += nakovStep;
                 } else {
-                    nakovPositionY = (row - 1) * 50;
-                    //nakov=nakovStuck;
+                    nakovPositionY = (row - 1) * STEP;
                     nakov = nakovDown;
                 }
             }
-
-                /*if (row < 16) {
-                    if (charAt(row, col) == '0') {
-                        nakovPositionY -= nakovStep;
-                    }
-                }*/
-
         }
         //left
 
@@ -202,21 +185,15 @@ public class Play extends BasicGameState {
                 nakov = nakovLeft;
                 //col--;
                 nakovPositionX -= nakovStep;
-                nakovPositionY = (row - 1) * 50;
+                nakovPositionY = (row - 1) * STEP;
             } else {
-                if (nakovPositionX > (col - 1) * 50) {
+                if (nakovPositionX > (col - 1) * STEP) {
                     nakovPositionX -= nakovStep;
                 } else {
-                    nakovPositionX = (col - 1) * 50;
-                    nakov=nakovLeft;
+                    nakovPositionX = (col - 1) * STEP;
+                    nakov = nakovLeft;
                 }
             }
-           /* if (col + 1 > 0) {
-                if (charAt(row, col) == '0') {
-                    nakovPositionX += nakovStep;
-                }
-            }*/
-
 
             //right
 
@@ -225,21 +202,15 @@ public class Play extends BasicGameState {
                 nakov = nakovRight;
                 //col++;
                 nakovPositionX += nakovStep;
-                nakovPositionY = (row - 1) * 50;
+                nakovPositionY = (row - 1) * STEP;
             } else {
-                if (nakovPositionX < (col - 1) * 50) {
+                if (nakovPositionX < (col - 1) * STEP) {
                     nakovPositionX += nakovStep;
                 } else {
-                    nakovPositionX = (col - 1) * 50;
-                    nakov=nakovRight;
+                    nakovPositionX = (col - 1) * STEP;
+                    nakov = nakovRight;
                 }
             }
-
-            /*if (17 > col) {
-                if (charAt(row, col) == '0') {
-                    nakovPositionX -= nakovStep;
-                }
-            }*/
 
             //quit
         } else if (input.isKeyDown(Input.KEY_ESCAPE))
