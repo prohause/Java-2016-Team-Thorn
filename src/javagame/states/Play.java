@@ -1,10 +1,15 @@
 package javagame.states;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Play extends BasicGameState {
     private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
@@ -20,6 +25,31 @@ public class Play extends BasicGameState {
     private float ghostshiftY = ghostPositionY + 300;
     private Random randomGen = new Random();
     private int theRandomNumber = randomGen.nextInt(4);
+    private final int width = 50;
+    private final int height = 35;
+    private ArrayList<String> lines = new ArrayList<>();
+    private int row = 0;
+    private int col = 0;
+    private int rows;
+    private int cols;
+
+    public void readMaze() {
+        try {
+            Scanner sc = new Scanner(new File("res/maze.txt"));
+            while (sc.hasNextLine()) {
+                lines.add(sc.nextLine());
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        rows = lines.size();
+        cols = lines.get(0).length();
+    }
+
+    public char charAt(int row, int col) {
+        return lines.get(row).charAt(col);
+    }
 
     public Play(int state) {
     }
@@ -52,14 +82,25 @@ public class Play extends BasicGameState {
         ghostDown = new Animation(ghostMovingDown, duration, true);
         ghostUp = new Animation(ghostMovingUp, duration, true);
         ghost = ghostRight;
+        nakovPositionX = 0;
+        nakovPositionY = 0;
+        readMaze();
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        background.draw(0, 0);
+        //background.draw(0, 0);
+//         maze.draw(0,0);
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostshiftX, ghostshiftY);
-        graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
-
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (charAt(r, c) != '0') {
+                    graphics.fillRect(c * 50, r * 35, 50, 35);
+                }
+            }
+        }
+        graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
+        //  graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
         if (quit) {
             graphics.drawString("Resume(R)", 350, 200);
             graphics.drawString("Main Menu(M)", 350, 250);
@@ -71,44 +112,73 @@ public class Play extends BasicGameState {
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+
         Input input = gameContainer.getInput();
+
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
 
         //up
-        if (input.isKeyDown(Input.KEY_UP)) {
+        if (input.isKeyDown(Input.KEY_UP) && row > 0) {
             nakov = nakovUp;
+            row--;
             nakovPositionY -= nakovStep;
-            if (nakovPositionY < 0) {
-                nakovPositionY += nakovStep;
+            if (row + 1 > 0) {
+                if (charAt(row, col) == '0') {
+                    nakovPositionY += nakovStep;
+                }
             }
-        //down
-        } else if (input.isKeyDown(Input.KEY_DOWN)) {
+
+            //down
+
+        } else if (input.isKeyDown(Input.KEY_DOWN) && row < rows) {
             nakov = nakovDown;
-            nakovPositionY += nakovStep;
-            if (nakovPositionY > 550) {
-                nakovPositionY -= nakovStep;
-            }
-        //left
-        } else if (input.isKeyDown(Input.KEY_LEFT)) {
-            nakov = nakovLeft;
-            nakovPositionX -= nakovStep;
-            if (nakovPositionX < 0) {
-                nakovPositionX += nakovStep;
-            }
-        //right
-        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-            nakov = nakovRight;
+            row++;
             nakovPositionX += nakovStep;
-            if (nakovPositionX > 750) {
-                nakovPositionX -= nakovStep;
+                if (row < 17) {
+                    if (charAt(row, col) == '0') {
+                        nakovPositionY -= nakovStep;
+                    }
+                }
+
+        }
+            //left
+
+        else if (input.isKeyDown(Input.KEY_LEFT) && col > 0)
+
+        {
+            nakov = nakovLeft;
+            col--;
+            nakovPositionX -= nakovStep;
+            if (col + 1 > 0) {
+                if (charAt(row, col) == '0') {
+                    nakovPositionX += nakovStep;
+                }
             }
-        //quit
-        } else if (input.isKeyDown(Input.KEY_ESCAPE)) {
+
+
+            //right
+
+        } else if (input.isKeyDown(Input.KEY_RIGHT) && col < cols) {
+            nakov = nakovRight;
+            col++;
+            nakovPositionX += nakovStep;
+            if (17 > col) {
+                if (charAt(row, col) == '0') {
+                    nakovPositionX -= nakovStep;
+                }
+            }
+
+            //quit
+        } else if (input.isKeyDown(Input.KEY_ESCAPE))
+
+        {
             quit = true;
         }
 
-        if (quit) {
+        if (quit)
+
+        {
             if (input.isKeyDown(Input.KEY_R)) {
                 quit = false;
             } else if (input.isKeyDown(Input.KEY_M)) {
@@ -117,7 +187,10 @@ public class Play extends BasicGameState {
                 System.exit(0);
             }
         }
-        switch (theRandomNumber) {
+
+        switch (theRandomNumber)
+
+        {
             case 0:
                 ghostshiftY -= ghostStep;//up
                 if (ghostshiftY < 0) {
@@ -134,10 +207,8 @@ public class Play extends BasicGameState {
                 break;
             case 2:
                 ghostshiftX -= ghostStep;//left
-                if (ghostshiftX < 0) {
-                    ghostshiftX += ghostStep;
-                    theRandomNumber = randomGen.nextInt(4);
-                }
+                ghostshiftX += ghostStep;
+                theRandomNumber = randomGen.nextInt(4);
                 break;
             case 3:
                 ghostshiftX += ghostStep;//right
@@ -147,6 +218,7 @@ public class Play extends BasicGameState {
                 }
                 break;
         }
+
     }
 
     public int getID() {
