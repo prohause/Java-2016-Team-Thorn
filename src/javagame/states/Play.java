@@ -27,18 +27,19 @@ public class Play extends BasicGameState {
     private int theRandomNumber = randomGen.nextInt(4);
     private final int width = 50;
     private final int height = 35;
-    private ArrayList<String> lines = new ArrayList<>();
+    private ArrayList<StringBuilder> lines = new ArrayList<>();
     private int row = 0;
     private int col = 0;
     private int rows;
     private int cols;
+    private Image beer,rakiq;
 
 
     public void readMaze() {
         try {
             Scanner sc = new Scanner(new File("res/maze.txt"));
             while (sc.hasNextLine()) {
-                lines.add(sc.nextLine());
+                lines.add(new StringBuilder(sc.nextLine()));
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -66,6 +67,8 @@ public class Play extends BasicGameState {
         Image[] movingLeft = {new Image("res/left1.png"), new Image("res/left2.png"), new Image("res/left3.png")};
         Image[] movingUp = {new Image("res/up1.png"), new Image("res/up2.png"), new Image("res/up3.png")};
         Image[] movingDown = {new Image("res/down1.png"), new Image("res/down2.png"), new Image("res/down3.png")};
+        beer = new Image("res/beer.png");
+        rakiq = new Image("res/rakiq.png");
 
         nakovRight = new Animation(movingRight, duration, true);
         nakovLeft = new Animation(movingLeft, duration, true);
@@ -94,11 +97,14 @@ public class Play extends BasicGameState {
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostshiftX, ghostshiftY);
         graphics.drawString(row + " " + col + " " + theRandomNumber, 200, 500);
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (charAt(r, c) != '0') {
-                    //graphics.fillRect(c * 50, r * 50, 50, 50);
+        for (int r = 1; r < rows-1; r++) {
+            for (int c = 1; c < cols-1; c++) {
+                if (charAt(r, c) == '2') {
+                    beer.draw((c-1)*50,(r-1)*50);
+                }if (charAt(r, c) == '3') {
+                    rakiq.draw((c-1)*50,(r-1)*50);
                 }
+
             }
         }
         graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
@@ -116,6 +122,7 @@ public class Play extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
         Input input = gameContainer.getInput();
+        lines.get(row).setCharAt(col,'1');
 
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
@@ -124,7 +131,7 @@ public class Play extends BasicGameState {
 
         //up
         if (input.isKeyDown(Input.KEY_UP) && row > 0) {
-            if (charAt(row - 1, col) == '1') {
+            if (charAt(row - 1, col) != '0') {
                 nakov = nakovUp;
                 //row--;
                 nakovPositionY -= nakovStep;
@@ -146,7 +153,7 @@ public class Play extends BasicGameState {
             //down
 
         } else if (input.isKeyDown(Input.KEY_DOWN) && row < rows) {
-            if (charAt(row + 1, col) == '1') {
+            if (charAt(row + 1, col) != '0') {
                 nakov = nakovDown;
                 //row++;
                 nakovPositionY += nakovStep;
@@ -172,7 +179,7 @@ public class Play extends BasicGameState {
         else if (input.isKeyDown(Input.KEY_LEFT) && col > 0)
 
         {
-            if (charAt(row, col - 1) == '1') {
+            if (charAt(row, col - 1) != '0') {
                 nakov = nakovLeft;
                 //col--;
                 nakovPositionX -= nakovStep;
@@ -194,7 +201,7 @@ public class Play extends BasicGameState {
             //right
 
         } else if (input.isKeyDown(Input.KEY_RIGHT) && col < cols) {
-            if (charAt(row, col + 1) == '1') {
+            if (charAt(row, col + 1) != '0') {
                 nakov = nakovRight;
                 //col++;
                 nakovPositionX += nakovStep;
