@@ -156,7 +156,8 @@ public class Play extends BasicGameState {
                     nakovPositionY -= nakovStep;
                 } else {
                     nakovPositionY = (row - 1) * 50;
-                    nakov=nakovStuck;
+                    //nakov=nakovStuck;
+                    nakov = nakovUp;
                 }
             }
 
@@ -180,7 +181,8 @@ public class Play extends BasicGameState {
                     nakovPositionY += nakovStep;
                 } else {
                     nakovPositionY = (row - 1) * 50;
-                    nakov=nakovStuck;
+                    //nakov=nakovStuck;
+                    nakov = nakovDown;
                 }
             }
 
@@ -206,7 +208,7 @@ public class Play extends BasicGameState {
                     nakovPositionX -= nakovStep;
                 } else {
                     nakovPositionX = (col - 1) * 50;
-                    nakov=nakovStuck;
+                    nakov=nakovLeft;
                 }
             }
            /* if (col + 1 > 0) {
@@ -229,7 +231,7 @@ public class Play extends BasicGameState {
                     nakovPositionX += nakovStep;
                 } else {
                     nakovPositionX = (col - 1) * 50;
-                    nakov=nakovStuck;
+                    nakov=nakovRight;
                 }
             }
 
