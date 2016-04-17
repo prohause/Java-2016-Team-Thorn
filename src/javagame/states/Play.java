@@ -21,8 +21,8 @@ public class Play extends BasicGameState {
     private float nakovPositionY = 0;
     private float ghostPositionX = 0;
     private float ghostPositionY = 0;
-    private float ghostshiftX = ghostPositionX + 400;
-    private float ghostshiftY = ghostPositionY + 300;
+    //private float ghostshiftX = ghostPositionX + 400;
+    //private float ghostshiftY = ghostPositionY + 300;
     private Random randomGen = new Random();
     private int theRandomNumber = randomGen.nextInt(4);
     private final int width = 50;
@@ -32,7 +32,7 @@ public class Play extends BasicGameState {
     private int col = 0;
     private int rows;
     private int cols;
-    private Image beer,rakiq;
+    private Image beer, rakiq;
 
 
     public void readMaze() {
@@ -89,20 +89,33 @@ public class Play extends BasicGameState {
         nakovPositionX = 0;
         nakovPositionY = 0;
         readMaze();
+        for (int r = 1; r < rows - 1; r++) {
+            for (int c = 1; c < cols - 1; c++) {
+                if (charAt(r, c) == '5') {
+                    ghostPositionX = (c - 1) * 50;
+                    ghostPositionY = (r - 15) * 50;
+                }
+                if (charAt(r, c) == '4') {
+                    nakovPositionX = (c - 1) * 50;
+                    nakovPositionY = (r - 15) * 50;
+                }
+            }
+        }
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         background.draw(0, 0);
 //         maze.draw(0,0);
         nakov.draw(nakovPositionX, nakovPositionY);
-        ghost.draw(ghostshiftX, ghostshiftY);
+        ghost.draw(ghostPositionX, ghostPositionY);
         graphics.drawString(row + " " + col + " " + theRandomNumber, 200, 500);
-        for (int r = 1; r < rows-1; r++) {
-            for (int c = 1; c < cols-1; c++) {
+        for (int r = 1; r < rows - 1; r++) {
+            for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '2') {
-                    beer.draw((c-1)*50,(r-1)*50);
-                }if (charAt(r, c) == '3') {
-                    rakiq.draw((c-1)*50,(r-1)*50);
+                    beer.draw((c - 1) * 50, (r - 1) * 50);
+                }
+                if (charAt(r, c) == '3') {
+                    rakiq.draw((c - 1) * 50, (r - 1) * 50);
                 }
 
             }
@@ -122,7 +135,7 @@ public class Play extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
         Input input = gameContainer.getInput();
-        lines.get(row).setCharAt(col,'1');
+        lines.get(row).setCharAt(col, '1');
 
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
@@ -243,30 +256,30 @@ public class Play extends BasicGameState {
 
         {
             case 0:
-                ghostshiftY -= ghostStep;//up
-                if (ghostshiftY < 0) {
-                    ghostshiftY += ghostStep;
+                ghostPositionY -= ghostStep;//up
+                if (ghostPositionY < 0) {
+                    ghostPositionY += ghostStep;
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 1:
-                ghostshiftY += ghostStep;//down
-                if (ghostshiftY > 550) {
-                    ghostshiftY -= ghostStep;
+                ghostPositionY += ghostStep;//down
+                if (ghostPositionY > 550) {
+                    ghostPositionY -= ghostStep;
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 2:
-                ghostshiftX -= ghostStep;//left
-                if (ghostshiftX < 0) {
-                    ghostshiftX += ghostStep;
+                ghostPositionX -= ghostStep;//left
+                if (ghostPositionX < 0) {
+                    ghostPositionX += ghostStep;
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 3:
-                ghostshiftX += ghostStep;//right
-                if (ghostshiftX > 750) {
-                    ghostshiftX -= ghostStep;
+                ghostPositionX += ghostStep;//right
+                if (ghostPositionX > 750) {
+                    ghostPositionX -= ghostStep;
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
