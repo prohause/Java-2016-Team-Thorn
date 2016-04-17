@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Play extends BasicGameState {
     private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
@@ -32,7 +33,8 @@ public class Play extends BasicGameState {
     private int rows;
     private int cols;
     private Image beer, rakiq;
-
+    long counter;
+    Random rnd = new Random();
 
     public void readMaze() {
         try {
@@ -104,7 +106,7 @@ public class Play extends BasicGameState {
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        background.draw(0, 0);
+        //  background.draw(0, 0);
 //         maze.draw(0,0);
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostPositionX, ghostPositionY);
@@ -145,7 +147,20 @@ public class Play extends BasicGameState {
 
         Input input = gameContainer.getInput();
         lines.get(row).setCharAt(col, '1');
-
+        counter += delta;
+        // every 2.5 seconds enters the loop and generates random row and col ,
+        // checks if its empty and spawns a beer !
+        if (counter >= 2500) {
+            for(int i=0;i<50;i++) {
+                int randomcol = ThreadLocalRandom.current().nextInt(0,cols);
+                int randomrow = ThreadLocalRandom.current().nextInt(0,rows);
+                if (lines.get(randomrow).charAt(randomcol) == '1') {
+                    lines.get(randomrow).setCharAt(randomcol, '2');
+                }
+            }
+            counter =0;
+        }
+        //
         float nakovStep = 0.4f;
         float ghostStep = 0.4f;
         row = (int) Math.round(nakovPositionY / STEP) + 1;
@@ -189,9 +204,9 @@ public class Play extends BasicGameState {
 
         else if (input.isKeyDown(Input.KEY_LEFT) && col >= 0) {
             //teleportation left
-            if (col == 0 && charAt(row, col ) != '0') {
+            if (col == 0 && charAt(row, col) != '0') {
                 nakovPositionX -= nakovStep;
-                nakovPositionX = (cols-2)*STEP;
+                nakovPositionX = (cols - 2) * STEP;
                 col = cols - 2;
             } else if (charAt(row, col - 1) != '0') {
                 nakov = nakovLeft;
