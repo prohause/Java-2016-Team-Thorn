@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Play extends BasicGameState {
-    private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
+    private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown,nakovStuck;
     private Animation ghost, ghostRight, ghostLeft, ghostUp, ghostDown;
     private int[] duration = {130, 130, 130};
     private Image background;
@@ -67,6 +67,7 @@ public class Play extends BasicGameState {
         Image[] movingLeft = {new Image("res/left1.png"), new Image("res/left2.png"), new Image("res/left3.png")};
         Image[] movingUp = {new Image("res/up1.png"), new Image("res/up2.png"), new Image("res/up3.png")};
         Image[] movingDown = {new Image("res/down1.png"), new Image("res/down2.png"), new Image("res/down3.png")};
+        Image[] stuck = {new Image("res/face.png"), new Image("res/face.png"), new Image("res/face.png")};
         beer = new Image("res/beer.png");
         rakiq = new Image("res/rakiq.png");
 
@@ -74,6 +75,7 @@ public class Play extends BasicGameState {
         nakovLeft = new Animation(movingLeft, duration, true);
         nakovUp = new Animation(movingUp, duration, true);
         nakovDown = new Animation(movingDown, duration, true);
+        nakovStuck = new Animation(stuck,duration,true);
         nakov = nakovRight;
 
         Image[] ghostMovingRight = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
@@ -154,6 +156,7 @@ public class Play extends BasicGameState {
                     nakovPositionY -= nakovStep;
                 } else {
                     nakovPositionY = (row - 1) * 50;
+                    nakov=nakovStuck;
                 }
             }
 
@@ -177,6 +180,7 @@ public class Play extends BasicGameState {
                     nakovPositionY += nakovStep;
                 } else {
                     nakovPositionY = (row - 1) * 50;
+                    nakov=nakovStuck;
                 }
             }
 
@@ -202,6 +206,7 @@ public class Play extends BasicGameState {
                     nakovPositionX -= nakovStep;
                 } else {
                     nakovPositionX = (col - 1) * 50;
+                    nakov=nakovStuck;
                 }
             }
            /* if (col + 1 > 0) {
@@ -224,6 +229,7 @@ public class Play extends BasicGameState {
                     nakovPositionX += nakovStep;
                 } else {
                     nakovPositionX = (col - 1) * 50;
+                    nakov=nakovStuck;
                 }
             }
 
