@@ -37,5 +37,6 @@ public class MainGame extends StateBasedGame {
         } catch (SlickException ex) {
             ex.printStackTrace();
         }
+
     }
 }
