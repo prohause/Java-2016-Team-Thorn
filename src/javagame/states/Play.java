@@ -1,6 +1,5 @@
 package javagame.states;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,9 +13,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Play extends BasicGameState {
     private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
-    private Animation ghost, ghostRight, ghostLeft, ghostUp, ghostDown;
+    private Animation ghost;
     private int[] duration = {130, 130, 130};
-    private Image background;
+    private Image miniBackground;
     private boolean quit = false;
     private float nakovPositionX = 0;
     private float nakovPositionY = 0;
@@ -32,6 +31,7 @@ public class Play extends BasicGameState {
     private int col = 0;
     private int rows;
     private int cols;
+    private int score = 0;
     private Image beer, rakiq;
     long counter;
     Random rnd = new Random();
@@ -59,7 +59,7 @@ public class Play extends BasicGameState {
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Music openingMusic;
-        background = new Image("res/background.jpg");
+        miniBackground = new Image("res/miniBcg.png");
         gameContainer.setShowFPS(true);
         openingMusic = new Music("res/pacnakov_openingmusic.ogg");
         openingMusic.loop();
@@ -68,7 +68,6 @@ public class Play extends BasicGameState {
         Image[] movingLeft = {new Image("res/left1.png"), new Image("res/left2.png"), new Image("res/left3.png")};
         Image[] movingUp = {new Image("res/up1.png"), new Image("res/up2.png"), new Image("res/up3.png")};
         Image[] movingDown = {new Image("res/down1.png"), new Image("res/down2.png"), new Image("res/down3.png")};
-        Image[] stuck = {new Image("res/face.png"), new Image("res/face.png"), new Image("res/face.png")};
         beer = new Image("res/beer.png");
         rakiq = new Image("res/rakiq.png");
 
@@ -79,17 +78,8 @@ public class Play extends BasicGameState {
         nakov = nakovRight;
 
         Image[] ghostMovingRight = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
-        Image[] ghostMovingLeft = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
-        Image[] ghostMovingUp = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
-        Image[] ghostMovingDown = {new Image("res/inky.png"), new Image("res/blinky.png"), new Image("res/clyde.png")};
 
-        ghostRight = new Animation(ghostMovingRight, duration, true);
-        ghostLeft = new Animation(ghostMovingLeft, duration, true);
-        ghostDown = new Animation(ghostMovingDown, duration, true);
-        ghostUp = new Animation(ghostMovingUp, duration, true);
-        ghost = ghostRight;
-        nakovPositionX = 0;
-        nakovPositionY = 0;
+        ghost = new Animation(ghostMovingRight, duration, true);
         readMaze();
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
@@ -110,7 +100,7 @@ public class Play extends BasicGameState {
 //         maze.draw(0,0);
         nakov.draw(nakovPositionX, nakovPositionY);
         ghost.draw(ghostPositionX, ghostPositionY);
-        graphics.drawString(row + " " + col + " " + theRandomNumber, 200, 500);
+
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '2') {
@@ -126,12 +116,13 @@ public class Play extends BasicGameState {
         for (int r = 1; r < rows - 1; r++) {
             for (int c = 1; c < cols - 1; c++) {
                 if (charAt(r, c) == '0') {
-                    graphics.fillRect((c - 1) * STEP, (r - 1) * STEP, STEP, STEP);
+                    miniBackground.draw((c - 1) * STEP, (r - 1) * STEP);
                 }
             }
         }
+        graphics.drawString("Score: " + score, 650, 10);
         //
-        graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
+        //graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
         //  graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
         if (quit) {
             graphics.drawString("Resume(R)", 350, 200);
@@ -146,19 +137,25 @@ public class Play extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
 
         Input input = gameContainer.getInput();
+        if (lines.get(row).charAt(col) == '2') {
+            score += 10;
+        }
+        if (lines.get(row).charAt(col) == '3') {
+            score += 20;
+        }
         lines.get(row).setCharAt(col, '1');
         counter += delta;
         // every 2.5 seconds enters the loop and generates random row and col ,
         // checks if its empty and spawns a beer !
         if (counter >= 2500) {
-            for(int i=0;i<50;i++) {
-                int randomcol = ThreadLocalRandom.current().nextInt(0,cols);
-                int randomrow = ThreadLocalRandom.current().nextInt(0,rows);
+            for (int i = 0; i < 50; i++) {
+                int randomcol = ThreadLocalRandom.current().nextInt(0, cols);
+                int randomrow = ThreadLocalRandom.current().nextInt(0, rows);
                 if (lines.get(randomrow).charAt(randomcol) == '1') {
                     lines.get(randomrow).setCharAt(randomcol, '2');
                 }
             }
-            counter =0;
+            counter = 0;
         }
         //
         float nakovStep = 0.4f;
