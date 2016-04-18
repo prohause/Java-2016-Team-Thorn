@@ -1,8 +1,9 @@
 package models.characters;
 
-import javafx.animation.Animation;
-import javafx.scene.image.Image;
+import Assets.NakovAssets;
 import contracts.Character;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 public class NakovPlayer implements Character {
     private final int DEFAULT_NAKOV_START_POSITION_X = 0;
@@ -12,23 +13,32 @@ public class NakovPlayer implements Character {
     private int lifes;
     private int level;
     private float moveSpeed;
+    private final float MOVE_SPEED = 0.4f;
     private float positionX;
     private float positionY;
     private Image image;
-    private Animation staying, movingUp, movingDown, movingLeft, movingRight;
+    private Animation movingUp, movingDown, movingLeft, movingRight, staying;
+    private final int[] DURATION = {130, 130, 130};
+    private NakovAssets nakovAssets = new NakovAssets();
 
-    public NakovPlayer(int lifes, float moveSpeed,float positionX, float positionY) {
-        this.lifes = lifes;
-        this.moveSpeed = moveSpeed;
-        this.positionX = positionX;
-        this.positionY = positionY;
+
+    public NakovPlayer() {
+        this.lifes = DEFAULT_LIVES;
+        this.moveSpeed = MOVE_SPEED;
+        this.positionX = DEFAULT_NAKOV_START_POSITION_X;
+        this.positionY = DEFAULT_NAKOV_START_POSITION_Y;
+        this.movingUp = new Animation(nakovAssets.getMovingUp(), DURATION, true);
+        this.movingDown = new Animation(nakovAssets.getMovingDown(), DURATION, true);
+        this.movingLeft = new Animation(nakovAssets.getMovingLeft(),DURATION,true);
+        this.movingRight = new Animation(nakovAssets.getMovingRight(),DURATION,true);
+        this.staying = movingRight;
     }
 
     public int getLifes() {
         return 0;
     }
 
-    public void setLifes(int lives) {
+    public void setLifes(int lifes) {
 
     }
 
@@ -64,46 +74,47 @@ public class NakovPlayer implements Character {
 
     @Override
     public void setImage(Image image) {
-        this.image = image;
+
     }
 
     @Override
     public Animation getMovingUp() {
-        return movingUp;
+        return null;
     }
 
     @Override
     public void setMovingUp(Animation movingUp) {
-        this.movingUp = movingUp;
+
     }
 
     @Override
     public Animation getMovingDown() {
-        return movingDown;
+        return null;
     }
 
     @Override
     public void setMovingDown(Animation movingDown) {
-        this.movingDown = movingDown;
+
     }
 
     @Override
     public Animation getMovingLeft() {
-        return movingLeft;
+        return null;
     }
 
     @Override
     public void setMovingLeft(Animation movingLeft) {
-        this.movingLeft = movingLeft;
+
     }
 
     @Override
     public Animation getMovingRight() {
-        return movingRight;
+        return null;
     }
 
     @Override
     public void setMovingRight(Animation movingRight) {
-        this.movingRight = movingRight;
+
     }
+
 }

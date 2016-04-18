@@ -1,9 +1,9 @@
 package models.items;
 
 import contracts.Character;
-import contracts.Item;
+import contracts.Collectables;
 
-public class Beer implements Item{
+public class Beer extends Item {
 
     @Override
     public int getItemID() {

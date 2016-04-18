@@ -1,9 +1,10 @@
 package contracts;
 
-import javafx.animation.Animation;
-import javafx.scene.image.Image;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 public interface Character {
+
     float getMoveSpeed();
 
     void setMoveSpeed(float moveSpeed);

@@ -1,17 +1,23 @@
 package javagame.states;
 
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import contracts.CharacterFactory;
+import modelFactories.GhostFactory;
+import modelFactories.NakovFactory;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class Play extends BasicGameState {
+    CharacterFactory nakovFactory = new NakovFactory();
+    CharacterFactory ghostFactory = new GhostFactory();
+
+    //ItemFactory itemFactory = new Collectables():
     private Animation nakov, nakovRight, nakovLeft, nakovUp, nakovDown;
     private Animation ghost;
     private int[] duration = {130, 130, 130};
@@ -109,7 +115,6 @@ public class Play extends BasicGameState {
                 if (charAt(r, c) == '3') {
                     rakiq.draw((c - 1) * STEP, (r - 1) * STEP);
                 }
-
             }
         }
         // this loop is for pancake_lizard so he can make the maze image easier :)

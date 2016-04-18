@@ -1,9 +1,9 @@
 package models.items;
 
 import contracts.Character;
-import contracts.Item;
+import contracts.Collectables;
 
-public class Shield implements Item{
+public class Shield extends Item {
 
     @Override
     public int getItemID() {
