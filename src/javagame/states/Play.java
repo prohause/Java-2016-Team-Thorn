@@ -289,6 +289,19 @@ public class Play extends BasicGameState {
         }
 
         if (ghostRow == row && ghostCol == col) {
+            try {
+                File file = new File("res/highscores.txt");
+                file.createNewFile();
+                FileWriter writer = new FileWriter(file, true);
+                Date date = new Date();
+                writer.append(score + "|" + date.toString() + System.lineSeparator());
+                writer.flush();
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
             System.exit(0);
         }
 
