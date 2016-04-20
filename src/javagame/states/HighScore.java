@@ -3,6 +3,9 @@ package javagame.states;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import java.io.BufferedReader;
+
+import java.io.*;
 
 public class HighScore extends BasicGameState {
     private Image background;
@@ -13,10 +16,42 @@ public class HighScore extends BasicGameState {
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background = new Image("res/background_highscore.jpg");
+
+        Play play = new Play(0);
+        Integer localscore = play.score;
+
+
+
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         background.draw(0, 0);
+
+        try
+        {
+            int i = 120;
+            BufferedReader br = new BufferedReader(new FileReader("res/highscores.txt"));
+                String line;
+                while ((line = br.readLine()) != null) {
+
+                    graphics.drawString("Score: " + line, 420, i);
+                    i += 35;
+                }
+
+        }
+
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
         if (quit) {
             graphics.drawString("Resume(R)", 350, 200);
             graphics.drawString("Main Menu(M)", 350, 250);
@@ -29,6 +64,11 @@ public class HighScore extends BasicGameState {
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
+
+
+
+
+
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
             quit = true;
         }
