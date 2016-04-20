@@ -1,17 +1,18 @@
 package javagame.states;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 import contracts.CharacterFactory;
 import modelFactories.GhostFactory;
 import modelFactories.NakovFactory;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Play extends BasicGameState {
     CharacterFactory nakovFactory = new NakovFactory();
@@ -35,11 +36,16 @@ public class Play extends BasicGameState {
     private ArrayList<StringBuilder> lines = new ArrayList<>();
     private int row = 0;
     private int col = 0;
+    private int ghostRow = 0;
+    private int ghostCol = 0;
     private int rows;
     private int cols;
     private int score = 0;
     private Image beer, rakiq;
-    long counter;
+    final int ghostDuration = 300;
+    private int count = 0;
+    private long counter;
+    private int choise = 0;
     Random rnd = new Random();
 
     public void readMaze() {
@@ -126,6 +132,8 @@ public class Play extends BasicGameState {
             }
         }
         graphics.drawString("Score: " + score, 650, 10);
+        graphics.drawString(ghostRow + " " + ghostCol, 350, 10);
+        graphics.drawString(Integer.toString(theRandomNumber) + " " + Integer.toString(count), 350, 30);
         //
         //graphics.drawString(("X:" + Mouse.getX() + "Y" + Mouse.getY()), 100, 50);
         //  graphics.drawString(("X" + ghostshiftX + " Y" + ghostshiftY), 200, 300);
@@ -140,7 +148,7 @@ public class Play extends BasicGameState {
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-
+        count++;
         Input input = gameContainer.getInput();
         if (lines.get(row).charAt(col) == '2') {
             score += 10;
@@ -149,7 +157,7 @@ public class Play extends BasicGameState {
             score += 20;
         }
         lines.get(row).setCharAt(col, '1');
-        counter += delta;
+        //counter += delta;
         // every 2.5 seconds enters the loop and generates random row and col ,
         // checks if its empty and spawns a beer !
         if (counter >= 2500) {
@@ -167,6 +175,8 @@ public class Play extends BasicGameState {
         float ghostStep = 0.4f;
         row = (int) Math.round(nakovPositionY / STEP) + 1;
         col = (int) Math.round(nakovPositionX / STEP) + 1;
+        ghostRow = Math.round(ghostPositionY / STEP) + 1;
+        ghostCol = Math.round(ghostPositionX / STEP) + 1;
 
         //up
         if (input.isKeyDown(Input.KEY_UP) && row > 0) {
@@ -268,30 +278,102 @@ public class Play extends BasicGameState {
 
         {
             case 0:
+                //current = ghostCol;
+                //count = current - ghostCol;
+
                 ghostPositionY -= ghostStep;//up
-                if (ghostPositionY < 0) {
+                ghostPositionX = (ghostCol - 1) * STEP;
+
+                /*if (charAt(ghostRow - 1, ghostCol) != '0' && count > ghostDuration || charAt(ghostRow + 1, ghostCol) != '0' && count > ghostDuration) {
                     ghostPositionY += ghostStep;
+                    someNumber = randomGen.nextInt(4);
+                    while (someNumber == 1 ) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;
+                    theRandomNumber = someNumber;
+
+                }*/
+                if (ghostPositionY < 0 || charAt(ghostRow - 1, ghostCol) == '0'||charAt(ghostRow,ghostCol)=='6') {
+                    ghostPositionY += ghostStep;
+                    //someNumber = randomGen.nextInt(4);
+                    /*while (someNumber == 1 ) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;*/
                     theRandomNumber = randomGen.nextInt(4);
+                    //theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 1:
+                //current = ghostCol;
+                //count = ghostCol - current;
                 ghostPositionY += ghostStep;//down
-                if (ghostPositionY > 550) {
+                ghostPositionX = (ghostCol - 1) * STEP;
+               /* if (charAt(ghostRow - 1, ghostCol) != '0' && count > ghostDuration || charAt(ghostRow + 1, ghostCol) != '0' && count > ghostDuration) {
                     ghostPositionY -= ghostStep;
+                    someNumber = randomGen.nextInt(4);
+                    while (someNumber == 0 || someNumber == 1) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;
+                    theRandomNumber = someNumber;
+                }*/
+                if (ghostPositionY > 550 || charAt(ghostRow + 1, ghostCol) == '0'||charAt(ghostRow,ghostCol)=='6') {
+                    ghostPositionY -= ghostStep;
+                    //someNumber = randomGen.nextInt(4);
+                   /* while (someNumber == 0 || someNumber == 1) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;*/
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 2:
+                //current = ghostRow;
+                //count = current - ghostRow;
                 ghostPositionX -= ghostStep;//left
-                if (ghostPositionX < 0) {
+                ghostPositionY = (ghostRow - 1) * STEP;
+               /* if (charAt(ghostRow, ghostCol - 1) != '0' && count > ghostDuration || charAt(ghostRow, ghostCol + 1) != '0' && count > ghostDuration) {
                     ghostPositionX += ghostStep;
+                    someNumber = randomGen.nextInt(4);
+                    while (someNumber == 3 || someNumber == 2) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;
+                    theRandomNumber = someNumber;
+                }*/
+                if (ghostPositionX < 0 || charAt(ghostRow, ghostCol - 1) == '0'||charAt(ghostRow,ghostCol)=='6') {
+                    ghostPositionX += ghostStep;
+                    //someNumber = randomGen.nextInt(4);
+                   /* while (someNumber == 3 || someNumber == 2) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;*/
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;
             case 3:
+                //current = ghostRow;
+                //count = ghostRow - current;
                 ghostPositionX += ghostStep;//right
-                if (ghostPositionX > 750) {
+                ghostPositionY = (ghostRow - 1) * STEP;
+                /*if (charAt(ghostRow, ghostCol - 1) != '0' && count > ghostDuration || charAt(ghostRow, ghostCol + 1) != '0' && count > ghostDuration) {
                     ghostPositionX -= ghostStep;
+                    someNumber = randomGen.nextInt(4);
+                    while (someNumber == 2 || someNumber == 3) {
+                        someNumber = randomGen.nextInt(4);
+                    }
+                    count = 0;
+                    theRandomNumber = someNumber;
+                }*/
+                if (ghostPositionX > 750 || charAt(ghostRow, ghostCol + 1) == '0'||charAt(ghostRow,ghostCol)=='6') {
+                    ghostPositionX -= ghostStep;
+                    /*someNumber = randomGen.nextInt(4);
+                    while (someNumber == 2 || someNumber == 3) {
+                        someNumber = randomGen.nextInt(4);
+                    }*/
+                    count = 0;
                     theRandomNumber = randomGen.nextInt(4);
                 }
                 break;

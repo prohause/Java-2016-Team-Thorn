@@ -4,7 +4,7 @@ import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import contracts.Character;
 
-public class GhostEnemy implements Character {
+public abstract class GhostEnemy implements Character {
     private final int DEFAULT_GHOST_START_POSITION_X = 0;
     private final int DEFAULT_GHOST_START_POSITION_Y = 0;
     private final String ENEMY_NAME = "Ghost";
@@ -45,7 +45,7 @@ public class GhostEnemy implements Character {
     }
 
     @Override
-    public Animation getMovingUp() {
+    public org.newdawn.slick.Animation getMovingUp() {
         return null;
     }
 
@@ -55,7 +55,7 @@ public class GhostEnemy implements Character {
     }
 
     @Override
-    public Animation getMovingDown() {
+    public org.newdawn.slick.Animation getMovingDown() {
         return null;
     }
 
@@ -65,7 +65,7 @@ public class GhostEnemy implements Character {
     }
 
     @Override
-    public Animation getMovingLeft() {
+    public org.newdawn.slick.Animation getMovingLeft() {
         return null;
     }
 
@@ -75,7 +75,7 @@ public class GhostEnemy implements Character {
     }
 
     @Override
-    public Animation getMovingRight() {
+    public org.newdawn.slick.Animation getMovingRight() {
         return null;
     }
 

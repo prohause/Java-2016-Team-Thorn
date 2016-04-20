@@ -19,19 +19,29 @@ public interface Character {
 
     void setImage(Image image);
 
+    void setImage(javafx.scene.image.Image image);
+
     Animation getMovingUp();
 
     void setMovingUp(Animation movingUp);
+
+    void setMovingUp(javafx.animation.Animation movingUp);
 
     Animation getMovingDown();
 
     void setMovingDown(Animation movingDown);
 
+    void setMovingDown(javafx.animation.Animation movingDown);
+
     Animation getMovingLeft();
 
     void setMovingLeft(Animation movingLeft);
 
+    void setMovingLeft(javafx.animation.Animation movingLeft);
+
     Animation getMovingRight();
 
     void setMovingRight(Animation movingRight);
+
+    void setMovingRight(javafx.animation.Animation movingRight);
 }

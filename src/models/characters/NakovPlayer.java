@@ -5,7 +5,7 @@ import contracts.Character;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
-public class NakovPlayer implements Character {
+public abstract class NakovPlayer implements Character {
     private final int DEFAULT_NAKOV_START_POSITION_X = 0;
     private final int DEFAULT_NAKOV_START_POSITION_Y = 0;
     private final int DEFAULT_LIVES = 3;
