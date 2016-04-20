@@ -9,7 +9,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -37,7 +40,7 @@ public class Play extends BasicGameState {
     private int ghostCol = 0;
     private int rows;
     private int cols;
-    private int score = 0;
+    public int score = 0;
     private Image beer, rakiq;
     final int ghostDuration = 300;
     private int count = 0;
@@ -261,8 +264,28 @@ public class Play extends BasicGameState {
             } else if (input.isKeyDown(Input.KEY_M)) {
                 stateBasedGame.enterState(0);
             } else if (input.isKeyDown(Input.KEY_Q)) {
+                try {
+                    File file = new File("res/highscores.txt");
+                    file.createNewFile();
+                    FileWriter writer = new FileWriter(file, true);
+                    Date date = new Date();
+                    writer.append(score + "|" + date.toString() + System.lineSeparator());
+                    writer.flush();
+                    writer.close();
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+
+
                 System.exit(0);
             }
+
+
+
+
+
         }
 
         if (ghostRow == row && ghostCol == col) {
