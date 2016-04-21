@@ -6,6 +6,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.io.BufferedReader;
 
 import java.io.*;
+import java.util.*;
 
 public class HighScore extends BasicGameState {
     private Image background;
@@ -29,14 +30,29 @@ public class HighScore extends BasicGameState {
 
         try
         {
-            int i = 120;
+            int j = 120;
+            int i = 0;
             BufferedReader br = new BufferedReader(new FileReader("res/highscores.txt"));
                 String line;
+                List<String> scoreList = new ArrayList<>();
                 while ((line = br.readLine()) != null) {
-
-                    graphics.drawString("Score: " + line, 420, i);
-                    i += 35;
+                    scoreList.add(line);
+                    i = i+1;
                 }
+                Collections.sort(scoreList);
+                 i = 0;
+                int k = 0;
+
+                for (k = 0; k < 5; k++)
+                {
+                    if ( k < scoreList.size() - 1 )
+                    {
+                        graphics.drawString("Score: " + scoreList.get(i), 420, j);
+                        j += 35;
+                        i += 1;
+                    }
+                }
+
 
         }
 
