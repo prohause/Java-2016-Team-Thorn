@@ -302,7 +302,7 @@ public class Play extends BasicGameState {
             {
                 e.printStackTrace();
             }
-            System.exit(0);
+            stateBasedGame.enterState(0);
         }
 
         switch (theRandomNumber)
